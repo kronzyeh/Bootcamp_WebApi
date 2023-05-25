@@ -1,0 +1,21 @@
+﻿@model List<Example.WebApi.Models.Car>
+
+<h1>Car Parking Service</h1>
+
+<ul></ul>
+<table>
+    <tr>
+        <th>LicensePlate</th>
+        <th>CarColor</th>
+        <th>ParkingSpotr</th>
+    </tr>
+    @foreach (var car in Model)
+    {
+        <tr>
+            <td>@car.LicensePlate</td>
+            <td>@car.CarColor</td>
+            <td>@car.ParkingSpot</td>
+        </tr>
+    }
+</table>
+
