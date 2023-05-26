@@ -19,11 +19,7 @@ namespace Example.WebApi
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
                           
             );
-            routes.MapRoute(
-            name: "Car",
-            url: "Car/{action}/{id}",
-            defaults: new { controller = "Car", action = "Index", id = UrlParameter.Optional }
-        );
+         
         }
     }
 }

@@ -1,67 +1,96 @@
 ﻿using Example.WebApi.Models;
+using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace Example.WebApi.Controllers
 {
-    public class CarController : Controller
+    public class CarController : ApiController
     {
-        //Get list of cars
-        //Tested in postman, when you give it a list of cars it shows it in a table defined in index.cshtml
-        // GET /Car/Index
-        public ActionResult Index(List<Car> cars)
+        public static List<Car> cars = new List<Car>();
+        private readonly string _connectionString;
+        public CarController()
         {
-
-            return View(cars);
+            _connectionString = ConfigurationManager.ConnectionStrings["YourConnectionString"].ConnectionString;
+        }
+        // GET /Car/Index
+        public HttpResponseMessage Get()
+        {
+            if (cars.Count == 0) return Request.CreateResponse(HttpStatusCode.NotFound);
+            return Request.CreateResponse(HttpStatusCode.OK, cars);
         }
 
-        //Get specific car
-        //Tested in postman, you give it a car object in JSON format and it gives back the car color and license plate (it can be something else this is just an example)
-        // GET /Car/GetCar
-        public string GetCar(Car car)
+        
+        // GET /Car/Get
+        public HttpResponseMessage Get(string licensePlate)
         {
-            return car.CarColor + car.LicensePlate;
+            if(cars.Count==0) return Request.CreateResponse(HttpStatusCode.BadRequest);
+            foreach (Car car in cars)
+            {
+                if (car.LicensePlate == licensePlate) return Request.CreateResponse(HttpStatusCode.OK, licensePlate);
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound);
         } 
 
-        //Add a new car to the list
-        //Tested in postman, in body you give the list and one specific car and then it shows on the index table with new list with new car that we added
-        // POST /Car/AddCar
-        public ActionResult AddCar(List<Car> cars, Car car)
-        {
-            cars.Add(car);
 
-            return View("Index", cars);
+        // POST /Car/AddCar
+        public HttpResponseMessage Post(Car car)
+        {
+            string _connectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=tomo;";
+
+
+
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var command = new NpgsqlCommand("INSERT INTO cars (licenseplate, parkingspot, carcolor) VALUES (@param1, @param2, @param3)", connection))
+                    {
+                        command.Parameters.AddWithValue("@param1", car.LicensePlate);
+                        command.Parameters.AddWithValue("@param2", car.ParkingSpot);
+                        command.Parameters.AddWithValue("@param3", car.CarColor);
+  
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+            return Request.CreateResponse(HttpStatusCode.OK, cars);
             
         }
-        //Edit Parking spot of the specific car
-        //Tested in postman, as a parameters you give it one car, and as a second parameter it is only a parking spot as a string and then it shows that car with the changed parking spot
 
-        //PUT /Car/UpdateParkingSpot
-        public ActionResult UpdateParkingSpot(Car car, string parkingSpot)
+
+        //PUT /Car/Put
+        [HttpPut]
+        public HttpResponseMessage Put(string licensePlate, string parkingSpot)
         {
-            car.ParkingSpot = parkingSpot;
-            List<Car> cars = new List<Car>();
-            cars.Add(car);
-            return View("Index", cars);
+            if (cars.Count == 0) return Request.CreateResponse(HttpStatusCode.NotFound);
+            Car carToEdit = cars.FirstOrDefault(p => p.LicensePlate==licensePlate);
+            if(carToEdit == null)
+            {
+                carToEdit.ParkingSpot = parkingSpot;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, cars);
         }
-        //delete car, tested on postman and when i give the list with a car that has the same parameter like the car that is the other parameter then it deletes it from the list
-        //and on index the list is shown without that car
 
         // DELETE /Car/DeleteCar
-        public ActionResult DeleteCar(List<Car> cars, Car car)
+        
+        public HttpResponseMessage Delete(string licensePlate)
         {
-            for (int i = cars.Count - 1; i >= 0; i--)
+            if (cars.Count == 0) return Request.CreateResponse(HttpStatusCode.NotFound);
+            Car carToDelete = cars.FirstOrDefault(p => p.LicensePlate==licensePlate);
+            if (carToDelete != null)
             {
-                if (cars[i].LicensePlate == car.LicensePlate)
-                {
-                    cars.RemoveAt(i);
-                }
+                cars.Remove(carToDelete);
+                return Request.CreateResponse(HttpStatusCode.OK, cars);
             }
 
-            return View("Index", cars);
+            return Request.CreateResponse(HttpStatusCode.OK, cars);
         }
     }
 }
