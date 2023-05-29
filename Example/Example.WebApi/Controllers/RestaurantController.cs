@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using System.Web.WebPages;
 using Example.WebApi.Models;
@@ -16,7 +17,7 @@ namespace Example.WebApi.Controllers
 {
     public class RestaurantController : ApiController
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
         public RestaurantController()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["YourConnectionString"].ConnectionString;
@@ -27,7 +28,6 @@ namespace Example.WebApi.Controllers
             List<Restaurant> restaurants = new List<Restaurant>();
             try
             {
-                string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
                 using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Open();
@@ -57,8 +57,9 @@ namespace Example.WebApi.Controllers
             {
 
                 Trace.WriteLine(ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
             }
-            return Request.CreateResponse(HttpStatusCode.OK, restaurants);
         }
 
         // GET api/<controller>/5
@@ -73,8 +74,9 @@ namespace Example.WebApi.Controllers
             catch(Exception ex)
             {
                 Trace.WriteLine(ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         // POST api/<controller>
@@ -83,7 +85,6 @@ namespace Example.WebApi.Controllers
 
             try
             {
-                string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
 
 
                 using (var connection = new NpgsqlConnection(_connectionString))
@@ -95,7 +96,10 @@ namespace Example.WebApi.Controllers
                         command.Parameters.AddWithValue("@param2", restaurant.Title);
                         command.Parameters.AddWithValue("@param3", restaurant.Seats);
                         command.Parameters.AddWithValue("@param4", restaurant.Address);
-                        command.Parameters.AddWithValue("@param5", restaurant.OwnerName);
+                        if (!string.IsNullOrEmpty(restaurant.OwnerName))
+                        {
+                            command.Parameters.AddWithValue("@OwnerName", restaurant.OwnerName);
+                        }
 
 
                         command.ExecuteNonQuery();
@@ -105,6 +109,7 @@ namespace Example.WebApi.Controllers
             catch(Exception ex)
             {
                 Trace.WriteLine(ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, restaurant);
@@ -114,69 +119,62 @@ namespace Example.WebApi.Controllers
         // PUT api/<controller>/5
         public HttpResponseMessage Put(Guid id, [FromBody] Restaurant restaurant)
         {
-
-            try
+           
+            using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
             {
-                Restaurant restaurantBase = GetRestaurantById(id);
-                string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
-                using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+                connection.Open();
+                using (NpgsqlCommand command = new NpgsqlCommand())
                 {
-                    connection.Open();
-                    using (NpgsqlCommand command = new NpgsqlCommand("UPDATE Restaurant SET Title = @Title, Seats = @Seats, Address = @Address, OwnerName = @OwnerName WHERE id = @Id", connection))
+
+                    StringBuilder updateQuery = new StringBuilder("UPDATE Restaurant SET ");
+
+                    if (!string.IsNullOrEmpty(restaurant.Title))
                     {
-                        command.Parameters.AddWithValue("@Id", id);
-                        if (restaurant.Title.IsEmpty())
-                        {
-                            restaurant.Title = restaurantBase.Title;
-                        }
-                        else
-                        {
-                            restaurant.Title = restaurant.Title;
-                        }
+                        updateQuery.Append("Title = @Title, ");
                         command.Parameters.AddWithValue("@Title", restaurant.Title);
-                        if (restaurant.Seats == null)
-                        {
-                            restaurant.Seats = restaurantBase.Seats;
-                        }
-                        else
-                        {
-                            restaurant.Seats = restaurant.Seats;
-                        }
-                        command.Parameters.AddWithValue("@Seats", restaurant.Seats);
-                        if (restaurant.Address.IsEmpty())
-                        {
-                            restaurant.Address = restaurantBase.Address;
-                        }
-                        else
-                        {
-                            restaurant.Address = restaurant.Address;
-                        }
-                        command.Parameters.AddWithValue("@Address", restaurant.Address);
-                        if (restaurant.OwnerName.IsEmpty())
-                        {
-                            restaurant.OwnerName = restaurantBase.OwnerName;
-                        }
-                        else
-                        {
-                            restaurant.OwnerName = restaurant.OwnerName;
-                        }
-                        command.Parameters.AddWithValue("@OwnerName", restaurant.OwnerName);
-                        command.ExecuteNonQuery();
+                       
                     }
+
+                    if (restaurant.Seats != null)
+                    {
+                        updateQuery.Append("Seats = @Seats, ");
+                        command.Parameters.AddWithValue("@Seats", restaurant.Seats);
+                    }
+
+                    if (!string.IsNullOrEmpty(restaurant.Address))
+                    {
+                        updateQuery.Append("Address = @Address, ");
+                        command.Parameters.AddWithValue("@Address", restaurant.Address);
+                    }
+
+                    if (!string.IsNullOrEmpty(restaurant.OwnerName))
+                    {
+                        updateQuery.Append("OwnerName = @OwnerName, ");
+                        command.Parameters.AddWithValue("@OwnerName", restaurant.OwnerName);
+                    }
+
+
+                    if (updateQuery.Length > 0)
+                    {
+                        updateQuery.Length -= 2;
+                    }
+
+                    updateQuery.Append(" WHERE id = @Id");
+                    string query = updateQuery.ToString();
+                    command.CommandText = query;
+                    command.Connection = connection;
+                    command.ExecuteNonQuery();
                 }
             }
-            catch(Exception ex )
-            {
-                Trace.WriteLine(ex.Message.ToString());
-                return Request.CreateResponse(HttpStatusCode.BadRequest, restaurant);
-            }
+
             return Request.CreateResponse(HttpStatusCode.OK, restaurant);
         }
+
+
 
         // DELETE api/<controller>/5
         public HttpResponseMessage Delete(Guid id)
         {
-            string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
             try
             {
                 Restaurant restaurant = GetRestaurantById(id);
@@ -193,12 +191,12 @@ namespace Example.WebApi.Controllers
             catch( Exception ex )
             {
                 Trace.WriteLine(ex.Message.ToString());
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
         private Restaurant GetRestaurantById(Guid id)
         {
-            string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
             Restaurant restaurant = new Restaurant();
             using(NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
             {
