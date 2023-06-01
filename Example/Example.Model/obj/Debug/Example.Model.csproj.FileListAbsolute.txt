@@ -1,0 +1,9 @@
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\bin\Debug\Example.Model.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\bin\Debug\Example.Model.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\bin\Debug\Example.Model.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\bin\Debug\Example.Model.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\obj\Debug\Example.Model.csproj.AssemblyReference.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\obj\Debug\Example.Model.csproj.CoreCompileInputs.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\obj\Debug\Example.Model.csproj.CopyComplete
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\obj\Debug\Example.Model.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Model\obj\Debug\Example.Model.pdb

@@ -1,0 +1,6 @@
+C:\Users\TOTO\Desktop\WebApi\Example\Example.DAL\bin\Debug\Example.DAL.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.DAL\bin\Debug\Example.DAL.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.DAL\obj\Debug\Example.DAL.csproj.AssemblyReference.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.DAL\obj\Debug\Example.DAL.csproj.CoreCompileInputs.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.DAL\obj\Debug\Example.DAL.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.DAL\obj\Debug\Example.DAL.pdb

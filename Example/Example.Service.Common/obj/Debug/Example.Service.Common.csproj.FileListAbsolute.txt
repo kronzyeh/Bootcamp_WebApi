@@ -1,0 +1,6 @@
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Service.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Service.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.csproj.AssemblyReference.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.csproj.CoreCompileInputs.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.pdb

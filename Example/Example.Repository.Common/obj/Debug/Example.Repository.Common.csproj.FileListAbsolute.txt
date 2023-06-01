@@ -1,0 +1,17 @@
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Repository.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Repository.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Model.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Newtonsoft.Json.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\System.Web.Http.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Model.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Model.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Newtonsoft.Json.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\System.Web.Http.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Model.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.csproj.AssemblyReference.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.csproj.CoreCompileInputs.cache
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.csproj.CopyComplete
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.pdb

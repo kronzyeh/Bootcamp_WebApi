@@ -275,11 +275,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderWaiter.cs" />
-    <Compile Include="Models\Restaurant.cs" />
-    <Compile Include="Models\Waiter.cs" />
+    <Compile Include="Models\RestaurantRest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -423,6 +419,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Example.Model\Example.Model.csproj">
+      <Project>{B6194FA9-ACB2-4E3D-9C4F-E7F4BC886536}</Project>
+      <Name>Example.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Example.Service\Example.Service.csproj">
+      <Project>{59712210-EA9C-4CBF-92AA-838387EAF17A}</Project>
+      <Name>Example.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
