@@ -10,10 +10,10 @@ namespace Example.Service.Common
 {
     public interface IRestaurantService
     {
-        List<Restaurant> GetRestaurants();
-        Restaurant GetSpecificRestaurant(Guid id);
-        int SaveRestaurant([FromBody] Restaurant restaurant);
-        int UpdateRestaurant(Guid id, [FromBody] Restaurant restaurant);
-        int DeleteRestaurant(Guid id);
+        Task<List<Restaurant>> GetRestaurants();
+        Task<Restaurant> GetSpecificRestaurant(Guid id);
+        Task<int> SaveRestaurant([FromBody] Restaurant restaurant);
+        Task<int> UpdateRestaurant(Guid id, [FromBody] Restaurant restaurant);
+        Task<int> DeleteRestaurant(Guid id);
     }
 }

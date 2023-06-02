@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.WebPages;
 using Example.Model;
@@ -20,7 +21,7 @@ namespace Example.WebApi.Controllers
     public class RestaurantController : ApiController
     {
         // GET api/<controller>
-        public HttpResponseMessage Get()
+        public async Task<HttpResponseMessage> Get()
         {
             List<Restaurant> restaurants = new List<Restaurant>();
             List<RestaurantRest> restaurantsRest = new List<RestaurantRest>();
@@ -28,13 +29,8 @@ namespace Example.WebApi.Controllers
             try
             {
                 RestaurantService restaurantService = new RestaurantService();
-                restaurants = restaurantService.GetRestaurants();
-                foreach(Restaurant restaurantVar in restaurants)
-                {
-                    RestaurantRest restaurantRest = new RestaurantRest();
-                    SetModelToRest(restaurantRest, restaurantVar);
-                    restaurantsRest.Add(restaurantRest);
-                }
+                restaurants = await restaurantService.GetRestaurants();
+                restaurantsRest = SetModelToRest(restaurants);
                 return Request.CreateResponse(HttpStatusCode.OK, restaurantsRest);
             }
             catch (Exception ex)
@@ -47,16 +43,21 @@ namespace Example.WebApi.Controllers
         }
 
         // GET api/<controller>/5
-        public HttpResponseMessage Get(Guid id)
+        public async Task<HttpResponseMessage> Get(Guid id)
         {
             Restaurant restaurant = new Restaurant();
             RestaurantRest restaurantRest = new RestaurantRest();
             try
             {
                 RestaurantService restaurantService = new RestaurantService();
-                restaurant = restaurantService.GetSpecificRestaurant(id);
-                SetModelToRest(restaurantRest, restaurant);
-                return Request.CreateResponse(HttpStatusCode.OK, restaurantRest);
+                restaurant = await restaurantService.GetSpecificRestaurant(id);
+                List<Restaurant> restaurants = new List<Restaurant>{
+                    restaurant
+                };
+                List<RestaurantRest> restaurantsRest = new List<RestaurantRest>();
+
+                restaurantsRest = SetModelToRest(restaurants);
+                return Request.CreateResponse(HttpStatusCode.OK, restaurantsRest);
             }
             catch(Exception ex)
             {
@@ -66,15 +67,15 @@ namespace Example.WebApi.Controllers
         }
 
         // POST api/<controller>
-        public HttpResponseMessage Post([FromBody] RestaurantRest restaurantRest)
+        public async Task<HttpResponseMessage> Post([FromBody] RestaurantRest restaurantRest)
         {
             Restaurant restaurant = new Restaurant();
             int rowsAffected;
             try
-            {
+            {   
                 RestaurantService restaurantService = new RestaurantService();
-                SetModelFromRest(restaurantRest, restaurant);
-                rowsAffected = restaurantService.SaveRestaurant(restaurant);
+                restaurant = SetModelFromRest(restaurantRest);
+                rowsAffected = await restaurantService.SaveRestaurant(restaurant);
                 return Request.CreateResponse(HttpStatusCode.OK, rowsAffected);
 
             }
@@ -87,15 +88,15 @@ namespace Example.WebApi.Controllers
         }
 
         //// PUT api/<controller>/5
-        public HttpResponseMessage Put(Guid id, [FromBody] RestaurantRest restaurantRest)
+        public async Task<HttpResponseMessage> Put(Guid id, [FromBody] RestaurantRest restaurantRest)
         {
             Restaurant restaurant = new Restaurant();
             int rowsAffected;
             try
             {
                 RestaurantService restaurantService = new RestaurantService();
-                SetModelFromRest(restaurantRest, restaurant);
-                rowsAffected = restaurantService.UpdateRestaurant(id, restaurant);
+                restaurant = SetModelFromRest(restaurantRest);
+                rowsAffected = await restaurantService.UpdateRestaurant(id, restaurant);
                 return Request.CreateResponse(HttpStatusCode.OK, rowsAffected);
             }
             catch(Exception ex)
@@ -108,13 +109,13 @@ namespace Example.WebApi.Controllers
 
 
         //// DELETE api/<controller>/5
-        public HttpResponseMessage Delete(Guid id)
+        public async Task<HttpResponseMessage> Delete(Guid id)
         {
             int rowsAffected;
             try
             {
                 RestaurantService restaurantService = new RestaurantService();
-                rowsAffected = restaurantService.DeleteRestaurant(id);
+                rowsAffected = await restaurantService.DeleteRestaurant(id);
                 return Request.CreateResponse(HttpStatusCode.OK, rowsAffected);
             }
             catch(Exception ex)
@@ -123,20 +124,32 @@ namespace Example.WebApi.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
-        private void SetModelToRest(RestaurantRest restaurantRest, Restaurant restaurant)
+        private List<RestaurantRest> SetModelToRest(List<Restaurant> restaurants)
         {
-            restaurantRest.Title = restaurant.Title;
-            restaurantRest.Address = restaurant.Address;
-            restaurantRest.OwnerName = restaurant.OwnerName;
-            restaurantRest.Seats = (int)restaurant.Seats;
+            List<RestaurantRest> restRestaurants = new List<RestaurantRest>();
+
+            foreach (Restaurant restaurant in restaurants)
+            {
+                RestaurantRest restaurantRest = new RestaurantRest();
+                restaurantRest.Title = restaurant.Title;
+                restaurantRest.Address = restaurant.Address;
+                restaurantRest.OwnerName = restaurant.OwnerName;
+                restaurantRest.Seats = (int)restaurant.Seats;
+                restRestaurants.Add(restaurantRest);
+            }
+            return restRestaurants;
+
         }
-        private void SetModelFromRest(RestaurantRest restaurantRest, Restaurant restaurant)
+        private Restaurant SetModelFromRest(RestaurantRest restaurantRest)
         {
-            restaurant.Title = restaurantRest.Title;
-            restaurant.Address = restaurantRest.Address;
-            restaurant.OwnerName = restaurantRest.OwnerName;
-            restaurant.Seats = restaurantRest.Seats;
-            restaurant.Id = Guid.NewGuid();
+                Restaurant restaurant = new Restaurant();
+                restaurant.Title = restaurantRest.Title;
+                restaurant.Address = restaurantRest.Address;
+                restaurant.OwnerName = restaurantRest.OwnerName;
+                restaurant.Seats = restaurantRest.Seats;
+                restaurant.Id = Guid.NewGuid();
+          
+                return restaurant;
         }
     }
 }

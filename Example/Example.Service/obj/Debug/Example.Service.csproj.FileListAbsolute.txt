@@ -49,3 +49,5 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\obj\Debug\Example.Service.c
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\obj\Debug\Example.Service.csproj.CopyComplete
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\obj\Debug\Example.Service.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\obj\Debug\Example.Service.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\bin\Debug\Example.Service.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\bin\Debug\Example.Service.Common.pdb

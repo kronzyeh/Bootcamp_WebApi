@@ -16,7 +16,7 @@ namespace Example.Repository
     public class RestaurantRepository:IRestaurantRepository
     {
         private readonly string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
-        public List<Restaurant> Get()
+        public async Task<List<Restaurant>> Get()
         {
             List<Restaurant> restaurants = new List<Restaurant>();
             try
@@ -26,7 +26,7 @@ namespace Example.Repository
                     connection.Open();
                     using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM Restaurant", connection))
                     {
-                        using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                        using (NpgsqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
                             while (reader.Read())
                             {
@@ -47,17 +47,16 @@ namespace Example.Repository
             }
             catch (Exception ex)
             {
-                Trace.WriteLine(ex.Message.ToString());
-                
+                Trace.WriteLine(ex.Message.ToString()); 
             }
             return restaurants;
         }
-        public Restaurant Get(Guid id)
+        public async Task<Restaurant> Get(Guid id)
         {
             Restaurant restaurant = new Restaurant();
             try
             {
-                restaurant = GetRestaurantById(id);
+                restaurant = await GetRestaurantById(id);
             }
             catch (Exception ex)
             {
@@ -65,7 +64,7 @@ namespace Example.Repository
             }
             return restaurant;
         }
-        public int Post([FromBody] Restaurant restaurant)
+        public async Task<int> Post([FromBody] Restaurant restaurant)
         {
             int rowsAffected = 0;
             try
@@ -73,7 +72,7 @@ namespace Example.Repository
                 using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Open();
-                    using (var command = new NpgsqlCommand("INSERT INTO Restaurant (Id, Title, Seats, Address, OwnerName) VALUES (@Id, @Title, @Seats, @Address, @OwnerName)", connection))
+                    using (NpgsqlCommand command = new NpgsqlCommand("INSERT INTO Restaurant (Id, Title, Seats, Address, OwnerName) VALUES (@Id, @Title, @Seats, @Address, @OwnerName)", connection))
                     {
                         command.Parameters.AddWithValue("@Id", restaurant.Id = Guid.NewGuid());
                         command.Parameters.AddWithValue("@Title", restaurant.Title);
@@ -82,7 +81,7 @@ namespace Example.Repository
                         command.Parameters.AddWithValue("@OwnerName", restaurant.OwnerName);
 
 
-                        rowsAffected = command.ExecuteNonQuery();
+                        rowsAffected = await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -93,7 +92,7 @@ namespace Example.Repository
 
             return rowsAffected;
         }
-        public int Put(Guid id, [FromBody] Restaurant restaurant)
+        public async Task<int> Put(Guid id, [FromBody] Restaurant restaurant)
         {
             int rowsAffected = 0;
             using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
@@ -141,25 +140,26 @@ namespace Example.Repository
                     command.CommandText = query;
                     command.Connection = connection;
                     command.Parameters.AddWithValue("Id", @id);
-                    rowsAffected = command.ExecuteNonQuery();
+                    rowsAffected = await command.ExecuteNonQueryAsync();
+                    
                 }
             }
 
             return rowsAffected;
         }
-        public int Delete(Guid id)
+        public async Task<int> Delete(Guid id)
         {
             int rowsAffected = 0;
             try
             {
-                Restaurant restaurant = GetRestaurantById(id);
+                Restaurant restaurant = await GetRestaurantById(id);
                 using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Open();
                     using (NpgsqlCommand command = new NpgsqlCommand("Delete From Restaurant WHERE Id = @id", connection))
                     {
                         command.Parameters.AddWithValue("@id", id);
-                        rowsAffected = command.ExecuteNonQuery();
+                        rowsAffected = await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -169,7 +169,7 @@ namespace Example.Repository
             }
             return rowsAffected;
         }
-        public Restaurant GetRestaurantById(Guid id)
+        public async Task<Restaurant> GetRestaurantById(Guid id)
         {
             Restaurant restaurant = new Restaurant();
             using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
@@ -178,7 +178,7 @@ namespace Example.Repository
                 using (NpgsqlCommand command = new NpgsqlCommand("Select * From Restaurant WHERE Id = @id", connection))
                 {
                     command.Parameters.AddWithValue("@id", id);
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    using (NpgsqlDataReader reader = await command.ExecuteReaderAsync())
                     {
                         reader.Read();
 

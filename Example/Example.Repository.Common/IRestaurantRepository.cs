@@ -10,11 +10,11 @@ namespace Example.Repository.Common
 {
     public interface IRestaurantRepository
     {
-        List<Restaurant> Get();
-        Restaurant Get(Guid id);
-        int Post([FromBody] Restaurant restaurant);
-        int Put(Guid id, [FromBody] Restaurant restaurant);
-        int Delete(Guid id);
-        Restaurant GetRestaurantById(Guid id);
+        Task<List<Restaurant>> Get();
+        Task<Restaurant> Get(Guid id);
+        Task<int> Post([FromBody] Restaurant restaurant);
+        Task<int> Put(Guid id, [FromBody] Restaurant restaurant);
+        Task<int> Delete(Guid id);
+        Task<Restaurant> GetRestaurantById(Guid id);
     }
 }

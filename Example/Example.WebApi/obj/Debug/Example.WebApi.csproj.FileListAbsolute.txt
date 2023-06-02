@@ -223,7 +223,6 @@ C:\Users\TOTO\Desktop\Bootcamp\Bootcamp\Bootcamp_WebApi\BootcampDayThird\Example
 C:\Users\TOTO\Desktop\Bootcamp\Bootcamp\Bootcamp_WebApi\BootcampDayThird\Example\Example.WebApi\bin\System.Text.Json.xml
 C:\Users\TOTO\Desktop\Bootcamp\Bootcamp\Bootcamp_WebApi\BootcampDayThird\Example\Example.WebApi\bin\System.Threading.Channels.xml
 C:\Users\TOTO\Desktop\Bootcamp\Bootcamp\Bootcamp_WebApi\BootcampDayThird\Example\Example.WebApi\bin\System.ValueTuple.xml
-C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.WebApi.dll.config
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.WebApi.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.WebApi.pdb
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\roslyn\csc.exe
@@ -375,3 +374,6 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Model.Common.pdb
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Repository.pdb
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Repository.dll.config
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Repository.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Service.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Service.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.WebApi.dll.config

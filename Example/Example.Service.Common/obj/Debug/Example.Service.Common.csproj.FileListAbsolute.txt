@@ -4,3 +4,14 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Se
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.csproj.CoreCompileInputs.cache
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Model.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Newtonsoft.Json.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\System.Web.Http.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Model.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Model.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Newtonsoft.Json.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\System.Web.Http.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Model.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.csproj.CopyComplete
