@@ -9,7 +9,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.UI.WebControls;
 using System.Web.WebPages;
+using Example.Common;
 using Example.Model;
 using Example.Service;
 using Example.WebApi.Models;
@@ -21,15 +23,43 @@ namespace Example.WebApi.Controllers
     public class RestaurantController : ApiController
     {
         // GET api/<controller>
-        public async Task<HttpResponseMessage> Get()
+        //public async Task<HttpResponseMessage> Get()
+        //{
+        //    List<Restaurant> restaurants = new List<Restaurant>();
+        //    List<RestaurantRest> restaurantsRest = new List<RestaurantRest>();
+        //    Restaurant restaurant = new Restaurant();
+        //    try
+        //    {
+        //        RestaurantService restaurantService = new RestaurantService();
+        //        restaurants = await restaurantService.GetRestaurants();
+        //        restaurantsRest = SetModelToRest(restaurants);
+        //        return Request.CreateResponse(HttpStatusCode.OK, restaurantsRest);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Trace.WriteLine(ex.Message.ToString());
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        //    }
+        //}
+        public async Task<HttpResponseMessage> Get(int minimumSeats=0, string orderBy= "title" , int pageSize=5, int pageNumber = 1, string sortOrder = "Desc")
         {
-            List<Restaurant> restaurants = new List<Restaurant>();
+            Paging paging = new Paging();
+            paging.PageSize = pageSize;
+            paging.PageNumber = pageNumber;
+            Sorting sorting = new Sorting();
+            sorting.SortOrder = sortOrder;
+            sorting.OrderBy = orderBy;
+            Filter filter = new Filter();
+            filter.MinimumSeats = minimumSeats;
             List<RestaurantRest> restaurantsRest = new List<RestaurantRest>();
-            Restaurant restaurant = new Restaurant();
+            List<Restaurant> restaurants = new List<Restaurant>();
+
             try
             {
                 RestaurantService restaurantService = new RestaurantService();
-                restaurants = await restaurantService.GetRestaurants();
+                restaurants = await restaurantService.GetRestaurants(paging, sorting, filter);
                 restaurantsRest = SetModelToRest(restaurants);
                 return Request.CreateResponse(HttpStatusCode.OK, restaurantsRest);
             }
@@ -40,6 +70,8 @@ namespace Example.WebApi.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 
             }
+
+
         }
 
         // GET api/<controller>/5

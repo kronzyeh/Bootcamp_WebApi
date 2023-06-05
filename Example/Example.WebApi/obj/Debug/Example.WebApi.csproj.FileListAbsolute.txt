@@ -377,3 +377,5 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Repository.Commo
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Service.Common.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Service.Common.pdb
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.WebApi.dll.config
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Common.pdb

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Example.Service.Common;
+using Example.Common;
 
 namespace Example.Service
 {
@@ -19,6 +20,19 @@ namespace Example.Service
             {
                 RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Get();
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message.ToString());
+                throw;
+            }
+        }
+        public async Task<List<Restaurant>> GetRestaurants(Paging paging, Sorting sorting, Filter filter)
+        {
+            try
+            {
+                RestaurantRepository restaurantRepository = new RestaurantRepository();
+                return await restaurantRepository.Get(paging, sorting, filter);
             }
             catch (Exception ex)
             {

@@ -51,3 +51,5 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\obj\Debug\Example.Service.d
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\obj\Debug\Example.Service.pdb
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\bin\Debug\Example.Service.Common.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\bin\Debug\Example.Service.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\bin\Debug\Example.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service\bin\Debug\Example.Common.pdb

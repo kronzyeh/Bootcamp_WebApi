@@ -48,3 +48,5 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository\obj\Debug\Example.Reposi
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository\obj\Debug\Example.Repository.csproj.CopyComplete
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository\obj\Debug\Example.Repository.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository\obj\Debug\Example.Repository.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository\bin\Debug\Example.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository\bin\Debug\Example.Common.pdb

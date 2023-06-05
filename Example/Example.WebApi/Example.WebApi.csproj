@@ -276,6 +276,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\RestaurantRest.cs" />
+    <Compile Include="Models\WaiterRest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +422,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Example.Common\Example.Common.csproj">
+      <Project>{3D3F6E45-9D2C-40A7-B98D-271C9EAB4F62}</Project>
+      <Name>Example.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Example.Model\Example.Model.csproj">
       <Project>{B6194FA9-ACB2-4E3D-9C4F-E7F4BC886536}</Project>
       <Name>Example.Model</Name>

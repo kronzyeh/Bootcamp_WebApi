@@ -1,8 +1,10 @@
-﻿using Example.Model;
+﻿using Example.Common;
+using Example.Model;
 using Example.Repository.Common;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -51,6 +53,67 @@ namespace Example.Repository
             }
             return restaurants;
         }
+        public async Task<List<Restaurant>> Get(Paging paging, Sorting sorting, Filter filter)
+        {
+            List<Restaurant> restaurants = new List<Restaurant>();
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    StringBuilder query = new StringBuilder("SELECT * FROM Restaurant ");
+                    if(filter != null){
+                        query.Append("WHERE seats >= @minimumSeats ");
+                    }
+                    
+                    if (sorting != null)
+                    {
+                        query.Append("ORDER BY "); 
+                        query.Append(sorting.OrderBy); 
+
+                        if (sorting.SortOrder[0] == 'D')
+                            query.Append(" DESC "); 
+                        else
+                            query.Append(" ASC "); 
+                    }
+                    if (paging != null)
+                    {
+                        query.Append("OFFSET @offset "); 
+                        query.Append("LIMIT @limit "); 
+
+                        
+                        using (NpgsqlCommand cmd = new NpgsqlCommand(query.ToString(), connection))
+                        {
+                            cmd.Parameters.AddWithValue("@offset", (paging.PageNumber - 1) * paging.PageSize);
+                            cmd.Parameters.AddWithValue("@limit", paging.PageSize);
+                            cmd.Parameters.AddWithValue("@minimumSeats", filter.MinimumSeats);
+
+                            using (NpgsqlDataReader reader = await cmd.ExecuteReaderAsync())
+                            {
+                                while (reader.Read())
+                                {
+                                    Restaurant restaurant = new Restaurant();
+                                    restaurant.Id = (Guid)reader["Id"];
+                                    restaurant.Title = (string)reader["Title"];
+                                    restaurant.Seats = (int)reader["Seats"];
+                                    restaurant.Address = (string)reader["Address"];
+                                    restaurant.OwnerName = (string)reader["OwnerName"];
+                                    restaurants.Add(restaurant);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message.ToString());
+            }
+            return restaurants;
+        }
+
+
+
         public async Task<Restaurant> Get(Guid id)
         {
             Restaurant restaurant = new Restaurant();
