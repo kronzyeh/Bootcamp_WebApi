@@ -15,3 +15,6 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\System.Net
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\System.Web.Http.xml
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Model.Common.pdb
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\obj\Debug\Example.Service.Common.csproj.CopyComplete
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Service.Common\bin\Debug\Example.Common.dll.config

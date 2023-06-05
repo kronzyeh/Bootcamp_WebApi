@@ -1,4 +1,5 @@
-﻿using Example.Model;
+﻿using Example.Common;
+using Example.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Example.Service.Common
     public interface IRestaurantService
     {
         Task<List<Restaurant>> GetRestaurants();
+        Task<PageDetails> GetRestaurants(Paging paging, Sorting sorting, Filter filter);
         Task<Restaurant> GetSpecificRestaurant(Guid id);
         Task<int> SaveRestaurant([FromBody] Restaurant restaurant);
         Task<int> UpdateRestaurant(Guid id, [FromBody] Restaurant restaurant);

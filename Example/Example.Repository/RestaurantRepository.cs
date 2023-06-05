@@ -53,16 +53,22 @@ namespace Example.Repository
             }
             return restaurants;
         }
-        public async Task<List<Restaurant>> Get(Paging paging, Sorting sorting, Filter filter)
+        public async Task<PageDetails> Get(Paging paging, Sorting sorting, Filter filter)
         {
             List<Restaurant> restaurants = new List<Restaurant>();
+            int totalCount = 0;
+            PageDetails pageDetails = new PageDetails();
+            pageDetails.ItemsPerPage = paging.PageSize;
+            pageDetails.PageNumber = paging.PageNumber;
+            
             try
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Open();
                     StringBuilder query = new StringBuilder("SELECT * FROM Restaurant ");
-                    if(filter != null){
+                    StringBuilder countQuery = new StringBuilder("SELECT COUNT(*) FROM Restaurant ");
+                    if (filter != null){
                         query.Append("WHERE seats >= @minimumSeats ");
                     }
                     
@@ -99,9 +105,16 @@ namespace Example.Repository
                                     restaurant.Address = (string)reader["Address"];
                                     restaurant.OwnerName = (string)reader["OwnerName"];
                                     restaurants.Add(restaurant);
+                                    pageDetails.restaurants = restaurants;
                                 }
+                                reader.Close();
                             }
                         }
+                    }
+                    using (NpgsqlCommand countCmd = new NpgsqlCommand(countQuery.ToString(), connection))
+                    {
+                        object totalCounts = await countCmd.ExecuteScalarAsync();
+                        pageDetails.TotalCount = Convert.ToInt32(totalCounts);
                     }
                 }
             }
@@ -109,7 +122,8 @@ namespace Example.Repository
             {
                 Trace.WriteLine(ex.Message.ToString());
             }
-            return restaurants;
+            
+            return (pageDetails);
         }
 
 
@@ -146,6 +160,7 @@ namespace Example.Repository
 
                         rowsAffected = await command.ExecuteNonQueryAsync();
                     }
+                    
                 }
             }
             catch (Exception ex)

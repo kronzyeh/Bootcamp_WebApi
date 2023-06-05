@@ -15,3 +15,6 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.csproj.CopyComplete
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\obj\Debug\Example.Repository.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Common.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.Repository.Common\bin\Debug\Example.Common.dll.config

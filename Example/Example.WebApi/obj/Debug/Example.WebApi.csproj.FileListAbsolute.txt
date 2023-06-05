@@ -379,3 +379,8 @@ C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Service.Common.p
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.WebApi.dll.config
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Common.dll
 C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Common.pdb
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Autofac.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Autofac.Integration.WebApi.dll
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Example.Common.dll.config
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Autofac.xml
+C:\Users\TOTO\Desktop\WebApi\Example\Example.WebApi\bin\Autofac.Integration.WebApi.xml

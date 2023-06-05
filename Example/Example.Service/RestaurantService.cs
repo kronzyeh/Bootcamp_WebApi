@@ -9,16 +9,22 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Example.Service.Common;
 using Example.Common;
+using Example.Repository.Common;
 
 namespace Example.Service
 {
     public class RestaurantService : IRestaurantService
     {
+        protected readonly IRestaurantRepository restaurantRepository;
+        public RestaurantService(IRestaurantRepository restaurantRepository)
+        {
+            this.restaurantRepository = restaurantRepository;
+        }
+
         public async Task<List<Restaurant>> GetRestaurants()
         {
             try
             {
-                RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Get();
             }
             catch (Exception ex)
@@ -27,11 +33,10 @@ namespace Example.Service
                 throw;
             }
         }
-        public async Task<List<Restaurant>> GetRestaurants(Paging paging, Sorting sorting, Filter filter)
+        public async Task<PageDetails> GetRestaurants(Paging paging, Sorting sorting, Filter filter)
         {
             try
             {
-                RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Get(paging, sorting, filter);
             }
             catch (Exception ex)
@@ -44,7 +49,6 @@ namespace Example.Service
         {
             try
             {
-                RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Get(id);
             }
             catch (Exception ex)
@@ -57,7 +61,6 @@ namespace Example.Service
         {
             try
             {
-                RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Post(restaurant);
             }
             catch(Exception ex)
@@ -70,7 +73,6 @@ namespace Example.Service
         {
             try
             {
-                RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Put(id, restaurant);
             }
             catch(Exception ex)
@@ -83,7 +85,6 @@ namespace Example.Service
         {
             try
             {
-                RestaurantRepository restaurantRepository = new RestaurantRepository();
                 return await restaurantRepository.Delete(id);
             }
             catch(Exception ex)

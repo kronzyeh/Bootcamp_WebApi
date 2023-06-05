@@ -14,6 +14,7 @@ using System.Web.WebPages;
 using Example.Common;
 using Example.Model;
 using Example.Service;
+using Example.Service.Common;
 using Example.WebApi.Models;
 using Npgsql;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -22,29 +23,16 @@ namespace Example.WebApi.Controllers
 {
     public class RestaurantController : ApiController
     {
-        // GET api/<controller>
-        //public async Task<HttpResponseMessage> Get()
-        //{
-        //    List<Restaurant> restaurants = new List<Restaurant>();
-        //    List<RestaurantRest> restaurantsRest = new List<RestaurantRest>();
-        //    Restaurant restaurant = new Restaurant();
-        //    try
-        //    {
-        //        RestaurantService restaurantService = new RestaurantService();
-        //        restaurants = await restaurantService.GetRestaurants();
-        //        restaurantsRest = SetModelToRest(restaurants);
-        //        return Request.CreateResponse(HttpStatusCode.OK, restaurantsRest);
-        //    }
-        //    catch (Exception ex)
-        //    {
+        protected readonly IRestaurantService _restaurantService;
 
-        //        Trace.WriteLine(ex.Message.ToString());
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-        //    }
-        //}
-        public async Task<HttpResponseMessage> Get(int minimumSeats=0, string orderBy= "title" , int pageSize=5, int pageNumber = 1, string sortOrder = "Desc")
+        public RestaurantController(IRestaurantService restaurantService)
         {
+            _restaurantService = restaurantService;
+        }
+       
+        public async Task<HttpResponseMessage> Get(int minimumSeats=0, string orderBy= "title" , int pageSize=10, int pageNumber = 1, string sortOrder = "Desc")
+        {
+            PageDetails pageDetails = new PageDetails();
             Paging paging = new Paging();
             paging.PageSize = pageSize;
             paging.PageNumber = pageNumber;
@@ -56,12 +44,13 @@ namespace Example.WebApi.Controllers
             List<RestaurantRest> restaurantsRest = new List<RestaurantRest>();
             List<Restaurant> restaurants = new List<Restaurant>();
 
+
             try
             {
-                RestaurantService restaurantService = new RestaurantService();
-                restaurants = await restaurantService.GetRestaurants(paging, sorting, filter);
+
+                pageDetails = await _restaurantService.GetRestaurants(paging, sorting, filter);
                 restaurantsRest = SetModelToRest(restaurants);
-                return Request.CreateResponse(HttpStatusCode.OK, restaurantsRest);
+                return Request.CreateResponse(HttpStatusCode.OK, pageDetails);
             }
             catch (Exception ex)
             {
@@ -81,8 +70,7 @@ namespace Example.WebApi.Controllers
             RestaurantRest restaurantRest = new RestaurantRest();
             try
             {
-                RestaurantService restaurantService = new RestaurantService();
-                restaurant = await restaurantService.GetSpecificRestaurant(id);
+                restaurant = await _restaurantService.GetSpecificRestaurant(id);
                 List<Restaurant> restaurants = new List<Restaurant>{
                     restaurant
                 };
@@ -105,9 +93,8 @@ namespace Example.WebApi.Controllers
             int rowsAffected;
             try
             {   
-                RestaurantService restaurantService = new RestaurantService();
                 restaurant = SetModelFromRest(restaurantRest);
-                rowsAffected = await restaurantService.SaveRestaurant(restaurant);
+                rowsAffected = await _restaurantService.SaveRestaurant(restaurant);
                 return Request.CreateResponse(HttpStatusCode.OK, rowsAffected);
 
             }
@@ -126,9 +113,8 @@ namespace Example.WebApi.Controllers
             int rowsAffected;
             try
             {
-                RestaurantService restaurantService = new RestaurantService();
                 restaurant = SetModelFromRest(restaurantRest);
-                rowsAffected = await restaurantService.UpdateRestaurant(id, restaurant);
+                rowsAffected = await _restaurantService.UpdateRestaurant(id, restaurant);
                 return Request.CreateResponse(HttpStatusCode.OK, rowsAffected);
             }
             catch(Exception ex)
@@ -146,8 +132,7 @@ namespace Example.WebApi.Controllers
             int rowsAffected;
             try
             {
-                RestaurantService restaurantService = new RestaurantService();
-                rowsAffected = await restaurantService.DeleteRestaurant(id);
+                rowsAffected = await _restaurantService.DeleteRestaurant(id);
                 return Request.CreateResponse(HttpStatusCode.OK, rowsAffected);
             }
             catch(Exception ex)
@@ -174,14 +159,16 @@ namespace Example.WebApi.Controllers
         }
         private Restaurant SetModelFromRest(RestaurantRest restaurantRest)
         {
-                Restaurant restaurant = new Restaurant();
-                restaurant.Title = restaurantRest.Title;
-                restaurant.Address = restaurantRest.Address;
-                restaurant.OwnerName = restaurantRest.OwnerName;
-                restaurant.Seats = restaurantRest.Seats;
-                restaurant.Id = Guid.NewGuid();
-          
-                return restaurant;
+            Restaurant restaurant = new Restaurant
+            {
+                Title = restaurantRest.Title,
+                Address = restaurantRest.Address,
+                OwnerName = restaurantRest.OwnerName,
+                Seats = restaurantRest.Seats,
+                Id = Guid.NewGuid()
+            };
+
+            return restaurant;
         }
     }
 }
