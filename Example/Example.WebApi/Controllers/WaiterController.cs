@@ -1,5 +1,7 @@
-﻿using Example.Model;
+﻿using Example.Common;
+using Example.Model;
 using Example.Service;
+using Example.Service.Common;
 using Example.WebApi.Models;
 using Npgsql;
 using System;
@@ -17,15 +19,34 @@ namespace Example.WebApi.Controllers
     {
         private readonly string _connectionString = "Server=localhost;Port=5432;Database=restaurant_database;User Id=postgres;Password=tomo;";
         // GET api/<controller>
-        public async Task<HttpResponseMessage> Get()
+        private readonly IWaiterService waiterService;
+        public WaiterController(IWaiterService waiterService)
         {
+            this.waiterService = waiterService;
+        }
+        public async Task<HttpResponseMessage> Get(string orderBy = "LastName", int pageSize = 3, int pageNumber = 1, string sortOrder = "Desc")
+        {
+            Paging paging = new Paging
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+            };
+            Sorting sorting = new Sorting
+            {
+                OrderBy = orderBy,
+                SortOrder = sortOrder
+            };
+            Filter filter = new Filter
+            {
+
+            };
             List<Waiter> waiters = new List<Waiter>();
             List<WaiterRest> waitersRest = new List<WaiterRest>();
             Waiter waiter = new Waiter();
             try
             {
-                WaiterService waiterService = new WaiterService();
-                waiters = await waiterService.GetWaiters();
+              
+                waiters = await waiterService.GetWaiters(paging, sorting, filter);
                 waitersRest = SetModelToRest(waiters);
                 return Request.CreateResponse(HttpStatusCode.OK, waitersRest);
             }

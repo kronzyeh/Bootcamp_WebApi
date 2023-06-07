@@ -1,4 +1,5 @@
-﻿using Example.Model;
+﻿using Example.Common;
+using Example.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Example.Service.Common
 {
     public interface IWaiterService
     {
-        Task<List<Waiter>> GetWaiters();
-        Task<Waiter> GetSpecificWaiter(Guid id);
+        Task<List<Waiter>> GetWaiters(Paging paging, Sorting sorting, Filter filter);
+        
     }
 }

@@ -21,6 +21,9 @@ namespace Example.WebApi.App_Start
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).InstancePerDependency();
             builder.RegisterType<RestaurantService>().As<IRestaurantService>().InstancePerDependency();
             builder.RegisterType<RestaurantRepository>().As<IRestaurantRepository>().InstancePerDependency();
+
+            builder.RegisterType<WaiterService>().As<IWaiterService>().InstancePerDependency();
+            builder.RegisterType<WaiterRepository>().As<IWaiterRepository>().InstancePerDependency();
             
 
             return builder.Build();
